@@ -1,4 +1,4 @@
-// import { useEffect } from "react";
+import { useEffect } from "react";
 // import { nanoid } from "nanoid";
 import ContactsItem from 'components/ContactsItem/ContactsItem.jsx';
 import FormAddPhone from 'components/FormAddPhone/FormAddPhone.jsx';
@@ -7,34 +7,32 @@ import css from 'components/App.module.css'
 import PropTypes from "prop-types";
 
 import { useSelector, useDispatch } from "react-redux";
-import { addContact, removeContact } from 'redux/contacts/contactsSlice.js';
+import { fetchContacts, addContact, removeContact } from "redux/contacts/contactsOperations.js";
 import { setFilter } from "redux/filter/filterSlice";
 import { getFilter } from "redux/filter/filterSelector";
-import { getFilteredContacts } from "redux/contacts/contactsSelector";
+import { getFilteredContacts, getState } from "redux/contacts/contactsSelector";
 
 
 export function App() {
   
   const contacts = useSelector(getFilteredContacts);
+  const {loading, error} = useSelector(getState);
     const filter = useSelector(getFilter);
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
+
+useEffect(() => {
+        dispatch(fetchContacts())
+    }, [dispatch]);
 
 const onAddContact = (contact) => {
-     if (isCopy(contact)) {
-        return alert(`${contact.name} is already in contacts`);
-    }
-    
-  const action = addContact(contact);
-        dispatch(action);
-    
+     const action = addContact(contact);
+      dispatch(action);
   }
 
-  
   const onRemoveContact = (id) => {
        const action = removeContact(id);
         dispatch(action);
-
 }
   
      const handelChange = (event) => {
@@ -42,11 +40,10 @@ const onAddContact = (contact) => {
        dispatch(setFilter(value));
   }
 
-   const isCopy = ({ name }) => {
-    const result = contacts.find((item) => item.name === name);
-    return result;
-  }
-
+  //  const isCopy = ({ name }) => {
+  //   const result = contacts.find((item) => item.name === name);
+  //   return result;
+  // }
   
  return (
       <div
@@ -65,7 +62,8 @@ const onAddContact = (contact) => {
         <FormAddPhone onSubmit={onAddContact} />
         <Filter filter={filter} handelChange={handelChange} />
         <h2 className={css.title}>Contacts</h2>
-        {contacts && <ContactsItem items={contacts} removeContact={onRemoveContact}/>}
+     {!loading && contacts.length > 0 && <ContactsItem items={contacts} removeContact={onRemoveContact} />}
+     {error && <p>oops, something went wrong</p>}
       </div>
     );
       }
@@ -77,3 +75,5 @@ App.propTypes = {
     filter: PropTypes.string,
     
 }
+
+
