@@ -29,7 +29,7 @@
 // export default contactsSlice.reducer;
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchContacts, addContact, removeContact } from "redux/contacts/contactsOperations.js";
+import { fetchContacts, addContact, deleteContact } from "redux/contacts/contactsOperations.js";
 
 const initialState = {
     items: [],
@@ -63,14 +63,14 @@ const contactsSlice = createSlice({
             store.loading = false;
             store.error = payload;
         },
-        [removeContact.pending]: (store) => {
+        [deleteContact.pending]: (store) => {
             store.loading = true;
         },
-        [removeContact.fulfilled]: (store, {payload}) => {
+        [deleteContact.fulfilled]: (store, {payload}) => {
             store.loading = false;
             store.items = store.items.filter(item => item.id !== payload)
         },
-        [removeContact.rejected]: (store, {payload}) => {
+        [deleteContact.rejected]: (store, {payload}) => {
             store.loading = false;
             store.error = payload;
         },

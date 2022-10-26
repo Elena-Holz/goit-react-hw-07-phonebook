@@ -7,7 +7,7 @@ import css from 'components/App.module.css'
 import PropTypes from "prop-types";
 
 import { useSelector, useDispatch } from "react-redux";
-import { fetchContacts, addContact, removeContact } from "redux/contacts/contactsOperations.js";
+import { fetchContacts, addContact, deleteContact} from "redux/contacts/contactsOperations.js";
 import { setFilter } from "redux/filter/filterSlice";
 import { getFilter } from "redux/filter/filterSelector";
 import { getFilteredContacts, getState } from "redux/contacts/contactsSelector";
@@ -30,8 +30,8 @@ const onAddContact = (contact) => {
       dispatch(action);
   }
 
-  const onRemoveContact = (id) => {
-       const action = removeContact(id);
+  const onDeleteContact = (id) => {
+       const action = deleteContact(id);
         dispatch(action);
 }
   
@@ -62,7 +62,7 @@ const onAddContact = (contact) => {
         <FormAddPhone onSubmit={onAddContact} />
         <Filter filter={filter} handelChange={handelChange} />
         <h2 className={css.title}>Contacts</h2>
-     {!loading && contacts.length > 0 && <ContactsItem items={contacts} removeContact={onRemoveContact} />}
+     {!loading && contacts.length > 0 && <ContactsItem items={contacts} deleteContact={onDeleteContact} />}
      {error && <p>oops, something went wrong</p>}
       </div>
     );

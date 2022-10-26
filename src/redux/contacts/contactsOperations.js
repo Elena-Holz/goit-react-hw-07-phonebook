@@ -6,13 +6,13 @@ const isCopy = ({name}, contacts) => {
   
 
     const result = contacts.find(item => {
-        return (normalizedTitle === item.nametoLowerCase())
+        return (normalizedTitle === item.name.toLowerCase())
     });
     return Boolean(result);
 }
 
 export const fetchContacts = createAsyncThunk(
-    "books/fetch",
+    "contacts/fetchAll",
     async(_, thunkApi) => {
         try {
             console.log(thunkApi);
@@ -25,10 +25,12 @@ export const fetchContacts = createAsyncThunk(
 );
     
 export const addContact = createAsyncThunk(
-    "contacts/add",
-    async(data, {rejectWithValue}) => {
+    "contacts/addContact",
+    async (data, { rejectWithValue }) => {
         try {
+             console.log(data);
             const result = await api.addContact(data);
+            console.log(result);
             return result;
         } catch (error) {
             return rejectWithValue(error);
@@ -37,6 +39,8 @@ export const addContact = createAsyncThunk(
     {
         condition: (data, { getState }) => {
             const { contacts } = getState();
+            console.log(data);
+            console.log(contacts.items);
             if(isCopy(data, contacts.items)) {
                 return alert(`${data.name} is already exist`)
             }
@@ -44,11 +48,11 @@ export const addContact = createAsyncThunk(
     }
 )
 
-export const removeContact = createAsyncThunk(
-    "contacts/remove",
+export const deleteContact= createAsyncThunk(
+    "contacts/deleteContact",
     async(id, {rejectWithValue}) => {
         try {
-            await api.removeContact(id);
+            await api.deleteContact(id);
             return id;
         } catch(error) {
             return rejectWithValue(error);
