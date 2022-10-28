@@ -8,8 +8,8 @@ import PropTypes from "prop-types";
 
 import { useSelector, useDispatch } from "react-redux";
 import { fetchContacts, addContact, deleteContact} from "redux/contacts/contactsOperations.js";
-import { setFilter } from "redux/filter/filterSlice";
-import { getFilter } from "redux/filter/filterSelector";
+// import { setFilter } from "redux/filter/filterSlice";
+// import { getFilter } from "redux/filter/filterSelector";
 import { getFilteredContacts, getState } from "redux/contacts/contactsSelector";
 
 
@@ -17,7 +17,7 @@ export function App() {
   
   const contacts = useSelector(getFilteredContacts);
   const {loading, error} = useSelector(getState);
-    const filter = useSelector(getFilter);
+  //   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
 
@@ -35,15 +35,11 @@ const onAddContact = (contact) => {
         dispatch(action);
 }
   
-     const handelChange = (event) => {
-       const { value } = event.target;
-       dispatch(setFilter(value));
-  }
-
-  //  const isCopy = ({ name }) => {
-  //   const result = contacts.find((item) => item.name === name);
-  //   return result;
+  //    const handelChange = (event) => {
+  //      const { value } = event.target;
+  //      dispatch(setFilter(value));
   // }
+
   
  return (
       <div
@@ -60,7 +56,8 @@ const onAddContact = (contact) => {
         
         <h2 className={css.title}>Phonebook</h2>
         <FormAddPhone onSubmit={onAddContact} />
-        <Filter filter={filter} handelChange={handelChange} />
+        <Filter/>
+      {/* <Filter filter={filter} handelChange={handelChange} /> */}
         <h2 className={css.title}>Contacts</h2>
      {!loading && contacts.length > 0 && <ContactsItem items={contacts} deleteContact={onDeleteContact} />}
      {error && <p>oops, something went wrong</p>}

@@ -3,7 +3,7 @@ import axios from "axios";
 const instanceContacts= axios.create({
     baseURL: "https://6357a541c26aac906f2ed568.mockapi.io/api/contacts",
     params: {
-        _limit: 20,
+        _limit: 25,
     }
 });
 

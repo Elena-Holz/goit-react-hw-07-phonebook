@@ -59,16 +59,17 @@ const contactsSlice = createSlice({
             store.loading = false;
             store.items.push(payload)
         },
-        [addContact.rejected]: (store, {payload}) => {
+        [addContact.rejected]: (store, { payload }) => {
             store.loading = false;
             store.error = payload;
         },
         [deleteContact.pending]: (store) => {
-            store.loading = true;
+            store.loading = false;
         },
-        [deleteContact.fulfilled]: (store, {payload}) => {
+        [deleteContact.fulfilled]: (store, { payload }) => {
             store.loading = false;
             store.items = store.items.filter(item => item.id !== payload)
+            
         },
         [deleteContact.rejected]: (store, {payload}) => {
             store.loading = false;
