@@ -1,10 +1,13 @@
 import PropTypes from "prop-types";
-
+import { addContact } from "redux/contacts/contactsOperations.js";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import css from 'components/FormAddPhone/FormAddPhone.module.css'
 
-export default function FormAddPhone({onSubmit}) {
+export default function FormAddPhone() {
+    const dispatch = useDispatch();
+
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
     
@@ -24,11 +27,16 @@ export default function FormAddPhone({onSubmit}) {
         }
        }
       
-    
+    const onAddContact = (contact) => {
+       
+        const action = addContact(contact);
+        console.log(action)
+        dispatch(action);
+    }
    
     const handelSabmit = (event) => {
         event.preventDefault();
-        onSubmit({ name, number });
+        onAddContact({ name, number });
         setName((name) => name = '');
         setNumber((number) => number = '');
         }
