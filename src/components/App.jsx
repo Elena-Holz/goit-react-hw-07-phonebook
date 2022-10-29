@@ -5,7 +5,6 @@ import FormAddPhone from 'components/FormAddPhone/FormAddPhone.jsx';
 import Filter from "components/Filter/Filter.jsx";
 import css from 'components/App.module.css'
 import PropTypes from "prop-types";
-
 import { useSelector, useDispatch } from "react-redux";
 import { fetchContacts } from "redux/contacts/contactsOperations.js";
 import { getState, getFilteredContacts } from "redux/contacts/contactsSelector";
@@ -22,11 +21,11 @@ useEffect(() => {
         dispatch(fetchContacts())
     }, [dispatch]);
   
-  
+
  return (
       <div
         style={{
-          height: '100vh',
+          // height: '100vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -37,7 +36,7 @@ useEffect(() => {
       >
         
         <h2 className={css.title}>Phonebook</h2>
-        <FormAddPhone  />
+     <FormAddPhone />
         <Filter/>
         <h2 className={css.title}>Contacts</h2>
      {!loading && contacts.length > 0 && <ContactsItem contacts={contacts} />}

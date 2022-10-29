@@ -1,15 +1,15 @@
 import * as api from "servies/api.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-const isCopy = ({name}, contacts) => {
-    const normalizedTitle = name.toLowerCase();
+// const isCopy = ({name}, contacts) => {
+//     const normalizedTitle = name.toLowerCase();
   
 
-    const result = contacts.find(item => {
-        return (normalizedTitle === item.name.toLowerCase())
-    });
-    return Boolean(result);
-}
+//     const result = contacts.find(item => {
+//         return (normalizedTitle === item.name.toLowerCase())
+//     });
+//     return Boolean(result);
+// }
 
 export const fetchContacts = createAsyncThunk(
     "contacts/fetchAll",
@@ -36,16 +36,16 @@ export const addContact = createAsyncThunk(
             return rejectWithValue(error);
         }
     },
-    {
-        condition: (data, { getState }) => {
-            const { contacts } = getState();
-            console.log(data);
-            console.log(contacts.items);
-            if(isCopy(data, contacts.items)) {
-                return alert(`${data.name} is already exist`)
-            }
-        }
-    }
+    // {
+    //     condition: (data, { getState }) => {
+    //         const { contacts } = getState();
+    //         console.log(data);
+    //         console.log(contacts.items);
+    //         if(isCopy(data, contacts.items)) {
+    //             return alert(`${data.name} is already exist`)
+    //         }
+    //     }
+    // }
 )
 
 export const deleteContact= createAsyncThunk(
